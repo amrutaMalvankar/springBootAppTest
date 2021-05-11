@@ -28,20 +28,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: java-app
-        path: '${{ github.workspace }}/target/*.war'
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    environment:
-      name: 'production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-
-    steps:
-    - name: Download artifact from build job
-      uses: actions/download-artifact@v2
-      with:
-        name: java-app
+        path: '${{ github.workspace }}/target/*.jar'
 
     - name: Deploy to Azure Web App
       id: deploy-to-webapp
@@ -50,4 +37,4 @@ jobs:
         app-name: 'app-spring-test'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_5e7066b0a948490eaa0268b4ac406f64 }}
-        package: '*.war'
+        package: '*.jar'
